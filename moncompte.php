@@ -1,31 +1,26 @@
 <?php
-/*
-SUPERGLOBAL $_SESSION
-
-Permet de faire transiter des informations entre les pages d'un système
-=> Très utilisé pour mettre en place un système de connexion
-
-Contrainte : pour l'utiliser il faut absolument que chaque page qui doit accéder à la session la démarre avec la fonction session_start()
-*/
-
-//Démarrage de la session
 session_start();
 
-//Variable d'affichage
-$title = "Mon Compte";
-
-//Page MonCompte non accessible à des personnes non connectées
-// Tester si la $_SESSION existe. Si ce n'est pas le cas, on le redirige
-if(!isset($_SESSION["text"])){
-    header('Location:index.php');
+if (!isset($_SESSION["Id_User"])) {
+    header("Location: index.php");
     exit;
 }
-
-include 'header.php';
-
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon profil</title>
+</head>
+<body>
     <main>
-        <p>Votre nom : <?php echo($_SESSION["text"]); ?></p>
+        <h1>Mon profil</h1>
+        <p>Identifiant : <?php echo htmlspecialchars((string) $_SESSION["Id_User"]); ?></p>
+        <p>Prénom : <?php echo htmlspecialchars($_SESSION["firstname"]); ?></p>
+        <p>Nom : <?php echo htmlspecialchars($_SESSION["lastname"]); ?></p>
+        <p>E-mail : <?php echo htmlspecialchars($_SESSION["email"]); ?></p>
+        <p>Rôle : <?php echo htmlspecialchars($_SESSION["role"]); ?></p>
+        <p><a href="index.php">Accueil</a> | <a href="deconnexion.php">Déconnexion</a></p>
     </main>
 </body>
 </html>
